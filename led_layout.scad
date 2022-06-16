@@ -8,7 +8,7 @@ led_dia = 12;
 moon_dia = 2300;
 
 // Spacing between the rings (mm)
-spacing = 65;
+spacing = 61;
 
 $fs=0.5;
 $fa=0.5;
