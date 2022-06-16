@@ -1,11 +1,8 @@
 use <circular_array.scad>
 
+
 // Diameter of the LED holes (mm)
-
-//led_dia = 12;
-
-// 1/4" pilot holes
-led_dia = 6.35;
+led_dia = 12;
 
 // Diameter of the entire array (mm)
 moon_dia = 2300;
@@ -17,6 +14,20 @@ $fs=0.5;
 $fa=0.5;
 
 ring_count = floor(moon_dia / (spacing * 2));
+
+mockup();
+
+module mockup() {
+  material_thickness = 4;
+
+  color("red")
+    linear_extrude(height=material_thickness)
+      left_panel();
+
+  color("blue")
+    linear_extrude(height=material_thickness)
+      right_panel();
+}
 
 
 module left_panel() {
@@ -43,31 +54,17 @@ module led_holes() {
 module left_backing() {
   difference() {
     circle(d=moon_dia);
-    translate([0, -moon_dia/2])
-    square([moon_dia, moon_dia]);
-
-  translate([0, -spacing * ring_count])
-    line_of_teeth(spacing, ring_count);
+    translate([spacing/2, -moon_dia/2])
+      square([moon_dia, moon_dia]);
   }
-
-  mirror([1, 0])
-    translate([0, -spacing * (ring_count - 1)])
-      line_of_teeth(spacing, ring_count - 1);
 }
 
 module right_backing() {
   difference() {
     circle(d=moon_dia);
-    translate([-moon_dia, -moon_dia/2])
-    square([moon_dia, moon_dia]);
-
-  mirror([1, 0])
-    translate([0, -spacing * (ring_count - 1)])
-      line_of_teeth(spacing, ring_count - 1);
+    translate([-moon_dia + spacing/2, -moon_dia/2])
+      square([moon_dia, moon_dia]);
   }
-
-  translate([0, -spacing * ring_count])
-    line_of_teeth(spacing, ring_count);
 }
 
 module line_of_teeth(spacing, count) {
