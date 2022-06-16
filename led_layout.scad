@@ -27,8 +27,17 @@ module mockup() {
   color("blue")
     linear_extrude(height=material_thickness)
       right_panel();
+
+  mounting_pole_holes();
 }
 
+
+module solid_panel() {
+  difference() {
+    circle(d=moon_dia);
+    led_holes();
+  }
+}
 
 module left_panel() {
   difference() {
@@ -44,6 +53,14 @@ module right_panel() {
 
     led_holes();
   }
+}
+
+module mounting_pole_holes() {
+  multiplier = 4.5;
+
+  translate([spacing/2, spacing/2, 0])
+    circular_array(ring_count = floor(ring_count/multiplier), radial_spread = spacing * multiplier)
+      cylinder(d=3, h=100);
 }
 
 module led_holes() {
